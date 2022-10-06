@@ -16,7 +16,8 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          learn react
+          We are on {process.env.REACT_APP_STAGE} stage and the api url is {process.env.REACT_APP_API_URL}
         </a>
       </header>
     </div>
