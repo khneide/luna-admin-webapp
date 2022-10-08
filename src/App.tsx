@@ -1,27 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Amplify, Auth } from 'aws-amplify';
 
-function App() {
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
+
+Auth.currentUserInfo()
+  .then(res => {
+    console.log(res);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          learn react
-          Different: We come to you from {process.env.REACT_APP_STAGE} stage and the api url is {process.env.REACT_APP_API_URL}
-        </a>
-      </header>
-    </div>
+    <Authenticator hideSignUp socialProviders={['google']} variation="modal">
+      {({ signOut, user }) => (
+        <main>
+          <h1>Hello {JSON.stringify(user?.attributes?.email)}</h1>
+          <button onClick={signOut}>Sign out</button>
+        </main>
+      )}
+    </Authenticator>
   );
 }
-
-export default App;

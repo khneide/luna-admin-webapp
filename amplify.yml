@@ -9,8 +9,6 @@ frontend:
         - yarn install --frozen-lockfile
     build:
       commands:
-        - echo "REACT_APP_API_URL=$API_ENDPOINT" >> .env
-        - echo "REACT_APP_STAGE=$API_STAGE" >> .env
         - yarn build
   artifacts:
     baseDirectory: build
