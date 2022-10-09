@@ -1,0 +1,10 @@
+type Name {
+  pk: String!
+  sk: String!
+  name: String!
+}
+
+type Query {
+    getNameById(pk: ID!, sk: ID!): Name
+		@aws_auth(cognito_groups: ["AdminsGroup"])
+}
