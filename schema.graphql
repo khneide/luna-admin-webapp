@@ -1,10 +1,62 @@
-type Name {
-  pk: String!
-  sk: String!
-  name: String!
+input AddOrgInput {
+	orgId: String!
+	name: String!
+	address: String
+	dateOnboarded: AWSTimestamp!
+}
+
+input AddFacilityInput {
+	facilityId: String!
+	name: String!
+	dateOnboarded: AWSTimestamp!
+	address: String
+	orgId: String!
+}
+
+input UpdateUserInput {
+	pccId: String!
+	lunaId: String!
+	facilityId: String!
+	fullName: String!
+  email: AWSEmail!
+	subscriptionStatus: String!
+	phone: AWSPhone
+	address: String
+}
+
+type Facility {
+	facilityId: ID!
+	name: String!
+	dateOnboarded: AWSTimestamp!
+	address: String
+}
+
+type Mutation {
+	addOrg(input: AddOrgInput): ID
+	addFacility(input: AddFacilityInput): ID
+	updateUser(input: UpdateUserInput): ID
+}
+
+type Org {
+	orgId: ID!
+	name: String!
+	dateOnboarded: AWSTimestamp!
+	address: String
+}
+
+type OrgUser {
+	pccId: ID!
+	lunaId: String!
+	fullName: String!
+	email: AWSEmail!
+	phone: AWSPhone
+	address: String
+	dateOnboarded: AWSTimestamp!
+	subscriptionStatus: String!
 }
 
 type Query {
-    getNameById(pk: ID!, sk: ID!): Name
-		@aws_auth(cognito_groups: ["AdminsGroup"])
+	getOrgs: [Org]
+	getFacilitiesForOrg(orgId: ID!): [Facility]
+	getOrgUsersForFacility(facilityId: ID!): [OrgUser]
 }
